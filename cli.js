@@ -2,7 +2,6 @@
 
 var record = require('node-record-lpcm16')
 var makeSwarm = require('discovery-swarm')
-var getport = require('random-port')
 var Speaker = require('speaker')
 var through = require('through2')
 var os = require('os')
@@ -51,16 +50,12 @@ function start () {
   var opts = Object.assign({}, swarmDefaults())
   var swarm = makeSwarm(opts)
   swarm.id = Buffer.concat([swarm.id, Buffer.from(name)])
-  var once = false
-  getport(function (port) {
-    if (once) return
-    once = true
-    console.log('joined swarm')
-    console.log('--- hold the L key to speak ---')
-    console.log('---      CTRL+C to quit     ---')
-    swarm.listen(port)
-    swarm.join('airchat_' + room)
-  })
+
+  console.log('joined swarm')
+  console.log('--- hold the L key to speak ---')
+  console.log('---      CTRL+C to quit     ---')
+
+  swarm.join('airchat_' + room)
 
   var input = record
     .start({
