@@ -23,7 +23,7 @@ if (p.error) {
     console.log('"sox" is required. Use your package manager to install something like:')
     console.log()
     console.log('brew install sox')
-  } else if (os.platform() === 'windows') {
+  } else if (os.platform() === 'win32') {
     console.log('"sox" is required. Install the binaries from:')
     console.log()
     console.log('http://sourceforge.net/projects/sox/files/latest/download')
