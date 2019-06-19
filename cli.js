@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var record = require('node-record-lpcm16')
 var readline = require('readline')
 var makeSwarm = require('discovery-swarm')

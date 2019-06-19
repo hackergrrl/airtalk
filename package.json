@@ -6,6 +6,9 @@
   "repository": {
     "url": "git://github.com/noffle/airtalk.git"
   },
+  "bin": {
+    "airtalk": "cli.js"
+  },
   "homepage": "https://github.com/noffle/airtalk",
   "bugs": "https://github.com/noffle/airtalk/issues",
   "main": "index.js",
