@@ -1,35 +1,27 @@
 #!/usr/bin/env node
 
 var record = require('node-record-lpcm16')
-var readline = require('readline')
 var makeSwarm = require('discovery-swarm')
 var getport = require('random-port')
 var Speaker = require('speaker')
 var through = require('through2')
 
-if (process.argv.length !== 3) {
-  console.log('USAGE: airtalk <ROOM-NAME>')
+if (process.argv.length !== 4) {
+  console.log('USAGE: airtalk <NICKNAME> <ROOM-NAME>')
   process.exit(1)
 }
 
 var speakStart = 0
-var room = process.argv[2]
-var name = 'comrade ' + Number(Math.random().toString().substring(2)).toString(16)
+var name = process.argv[2]
+var room = process.argv[3]
 var peers = {}
 
-// get name
-setTimeout(function () {
-  process.stdout.write('nickname: ')
-  var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-  });
-  rl.once('line', function (nick) {
-    if (nick && nick.length) name = nick
-    start()
-  })
-}, 500)
+if (!name || !room) {
+  console.log('USAGE: airtalk <NICKNAME> <ROOM-NAME>')
+  process.exit(1)
+}
+
+start()
 
 // start chat
 function start () {
@@ -38,6 +30,7 @@ function start () {
   swarm.join('airchat_' + room)
   getport(function (port) {
     console.log('joined swarm')
+    console.log('--- hold the L key to speak ---')
     swarm.listen(port)
   })
 
