@@ -7,6 +7,7 @@ var Speaker = require('speaker')
 var through = require('through2')
 var os = require('os')
 var spawn = require('child_process').spawnSync
+var swarmDefaults = require('dat-swarm-defaults')
 
 if (process.argv.length !== 4) {
   console.log('USAGE: airtalk <NICKNAME> <ROOM-NAME>')
@@ -47,7 +48,8 @@ start()
 
 // start chat
 function start () {
-  var swarm = makeSwarm()
+  var opts = Object.assign({}, swarmDefaults())
+  var swarm = makeSwarm(opts)
   swarm.id = Buffer.concat([swarm.id, Buffer.from(name)])
   var once = false
   getport(function (port) {
