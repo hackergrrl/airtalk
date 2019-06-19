@@ -32,7 +32,6 @@ if (p.error) {
   }
   process.exit(1)
 }
-return
 
 var speakStart = 0
 var name = process.argv[2]
