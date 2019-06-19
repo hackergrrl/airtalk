@@ -5,6 +5,7 @@ var readline = require('readline')
 var makeSwarm = require('discovery-swarm')
 var getport = require('random-port')
 var Speaker = require('speaker')
+var through = require('through2')
 
 if (process.argv.length !== 3) {
   console.log('USAGE: airtalk <ROOM-NAME>')
@@ -57,6 +58,18 @@ function start () {
   })
   speaker.on('error', console.error)
 
+  var buf = Buffer.alloc(0)
+  var bufferer = through(function (chunk, enc, next) {
+    buf = Buffer.concat([buf, chunk])
+    if (buf.length > 16000) {
+      this.push(buf)
+      buf = Buffer.alloc(0)
+    }
+    next()
+  })
+
+  bufferer.pipe(speaker)
+
   swarm.on('connection', function (conn, info) {
     console.log(info.id.length)
     var id = info.id.slice(0, 32)
@@ -65,7 +78,7 @@ function start () {
     peers[id] = conn
     console.log(name, 'connected')
 
-    conn.pipe(speaker)
+    conn.pipe(bufferer)
 
     conn.once('end', function () {
       console.log(name, 'disconnected')
@@ -105,6 +118,7 @@ function start () {
       Object.keys(peers).forEach(function (key) {
         var conn = peers[key]
         input.unpipe(conn)
+        input.on('data', function (){})
       })
     }
   }, 100)
