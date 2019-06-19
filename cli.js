@@ -48,12 +48,14 @@ function start () {
       recordProgram: 'arecord',
       silence: '1.0',
     })
+  input.on('data', function (){})
 
   var speaker = new Speaker({
     channels: 1,
     bitDepth: 16,
     sampleRate: 16000
   })
+  speaker.on('error', console.error)
 
   swarm.on('connection', function (conn, info) {
     console.log(info.id.length)
