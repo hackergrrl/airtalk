@@ -49,7 +49,6 @@ start()
 function start () {
   var swarm = makeSwarm()
   swarm.id = Buffer.concat([swarm.id, Buffer.from(name)])
-  swarm.join('airchat_' + room)
   var once = false
   getport(function (port) {
     if (once) return
@@ -58,6 +57,7 @@ function start () {
     console.log('--- hold the L key to speak ---')
     console.log('---      CTRL+C to quit     ---')
     swarm.listen(port)
+    swarm.join('airchat_' + room)
   })
 
   var input = record
