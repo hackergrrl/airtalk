@@ -2,7 +2,7 @@
   "name": "airtalk",
   "description": "p2p voice chat",
   "author": "Stephen Whitmore <sww@eight.net>",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "repository": {
     "url": "git://github.com/noffle/airtalk.git"
   },
