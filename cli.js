@@ -5,11 +5,34 @@ var makeSwarm = require('discovery-swarm')
 var getport = require('random-port')
 var Speaker = require('speaker')
 var through = require('through2')
+var os = require('os')
+var spawn = require('child_process').spawnSync
 
 if (process.argv.length !== 4) {
   console.log('USAGE: airtalk <NICKNAME> <ROOM-NAME>')
   process.exit(1)
 }
+
+var p = spawn('sox')
+if (p.error) {
+  if (os.platform() === 'linux') {
+    console.log('"sox" is required. Use your package manager to install something like:')
+    console.log()
+    console.log('sudo apt-get install sox libsox-fmt-all')
+  } else if (os.platform() === 'darwin') {
+    console.log('"sox" is required. Use your package manager to install something like:')
+    console.log()
+    console.log('brew install sox')
+  } else if (os.platform() === 'windows') {
+    console.log('"sox" is required. Install the binaries from:')
+    console.log()
+    console.log('http://sourceforge.net/projects/sox/files/latest/download')
+  } else {
+    console.log('The audio package "sox" is required.')
+  }
+  process.exit(1)
+}
+return
 
 var speakStart = 0
 var name = process.argv[2]
@@ -40,7 +63,7 @@ function start () {
       sampleRateHertz: 16000,
       threshold: 0,
       verbose: false,
-      recordProgram: 'arecord',
+      recordProgram: 'sox',
       silence: '1.0',
     })
   input.on('data', function (){})
