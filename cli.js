@@ -31,6 +31,7 @@ function start () {
   getport(function (port) {
     console.log('joined swarm')
     console.log('--- hold the L key to speak ---')
+    console.log('---      CTRL+C to quit     ---')
     swarm.listen(port)
   })
 
