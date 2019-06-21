@@ -16,8 +16,10 @@
   "dependencies": {
     "dat-swarm-defaults": "^1.0.2",
     "discovery-swarm": "^6.0.0",
-    "node-record-lpcm16": "^0.3.1",
-    "random-port": "^0.1.0",
+    "electron": "^5.0.4",
+    "get-user-media": "0.0.0",
+    "getusermedia": "^2.0.1",
+    "minimist": "^1.2.0",
     "speaker": "^0.4.2",
     "through2": "^3.0.1"
   },
